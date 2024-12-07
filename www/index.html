@@ -479,11 +479,16 @@ $(function() {
 
     // 投稿処理
     $('#postButton').on('click', function() {
-        // 投稿内容をフォームから取得
-        const authorVal = $('#authorInput').val();
-        const contentVal = $('#contentInput').val();
-        createPost(authorVal, contentVal);
+    // 確認モーダルを表示
+    showPostConfirmModal();
     });
+
+// 確認モーダルの投稿ボタンのイベント追加
+$('#confirmPostButton').on('click', function() {
+    const contentVal = $('#contentInput').val(); // 元の投稿内容を取得
+    createPost(currentUser.email, contentVal);   // 投稿処理を実行
+    closeModal('postConfirmModal');             // モーダルを閉じる
+});
 
     $('#loginButton').on('click', function() {
         const email = $('#loginEmail').val();
@@ -513,6 +518,20 @@ window.addEventListener('unload', function() {
         postsListener = null;
     }
 });
+function showPostConfirmModal() {
+    const contentVal = $('#contentInput').val();
+
+    // 投稿内容のバリデーション
+    if (!validateContent(contentVal)) return;
+
+    // 投稿内容をプレビューエリアに設定
+    $('#postPreview').html(escapeHtml(contentVal));
+
+    // モーダルを表示
+    showModal('postConfirmModal');
+}
+
+
     </script>
 </head>
 <body>
@@ -616,5 +635,24 @@ window.addEventListener('unload', function() {
             </div>
         </div>
     </div>
+    <!-- 投稿確認モーダルウィンドウ -->
+    <div id="postConfirmModal" class="modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>投稿の確認</h3>
+                <button class="modal-close" onclick="closeModal('postConfirmModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>この内容で投稿してもよろしいですか？</p>
+                <div id="postPreview" class="post-preview"></div>
+            </div>
+            <div class="modal-footer">
+                <button id="confirmPostButton" class="btn-primary">投稿する</button>
+                <button onclick="closeModal('postConfirmModal')" class="btn-cancel">キャンセル</button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
