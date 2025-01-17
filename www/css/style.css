@@ -4,6 +4,7 @@ body {
     background-color: #f8f9fa;
     color: #333;
     line-height: 1.6;
+    transition: background-color 0.3s ease;
 }
 
 .container {
@@ -506,4 +507,50 @@ textarea.form-control {
 
 .logged-out {
     display: none;
+}
+.theme-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.theme-btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: opacity 0.3s;
+}
+
+.theme-btn:hover {
+    opacity: 0.8;
+}
+
+.light-blue-btn {
+    background-color: #e3f2fd;
+    color: #1976d2;
+}
+
+.light-yellow-btn {
+    background-color: #fff3e0;
+    color: #f57c00;
+}
+
+body.light-blue-theme {
+    background-color: #e3f2fd;
+}
+
+body.light-yellow-theme {
+    background-color: #fff3e0;
+}
+
+@media (max-width: 768px) {
+    .theme-buttons {
+        position: static;
+        margin: 10px 0;
+        justify-content: center;
+    }
 }
