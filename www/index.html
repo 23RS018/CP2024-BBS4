@@ -458,6 +458,13 @@ function updateUI(user) {
 }
 
 $(function() {
+    document.addEventListener('DOMContentLoaded', function() {
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    }
+});
+
     // Firebaseの初期化
     try {
         firebase.initializeApp(firebaseConfig);
@@ -532,6 +539,13 @@ function showPostConfirmModal() {
     showModal('postConfirmModal');
 }
 
+function setTheme(theme) {
+    document.body.classList.remove('light-blue-theme', 'light-yellow-theme');
+    if (theme) {
+        document.body.classList.add(theme);
+    }
+    localStorage.setItem('theme', theme || '');
+}
 
     </script>
 </head>
